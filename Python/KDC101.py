@@ -20,23 +20,36 @@ class KDC101():
     def __init__(self):
         self.SN = Thorlabs.list_kinesis_devices()[0][0]
         self.Description = Thorlabs.list_kinesis_devices()[0][1]
-        self.obj = Thorlabs.kinesis.BasicKinesisDevice(self.SN)
+        # self.obj = Thorlabs.kinesis.KinesisDevice(self.SN)
+        self.obj = Thorlabs.kinesis.KinesisMotor(self.SN)
         self.ManualURL = 'https://www.thorlabs.com/software/apt/APT_Communications_Protocol_Rev_15.pdf'
         
     def GetInfo(self):
-         print(self.get_device_info())
+         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+         print('{}   |   <GET INFO>'.format(now))
+         tmp = self.obj.get_device_info()
+         print(tmp)
+         return tmp
+         
+    def GetInfoDetailed(self):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{}   |   <GET FULL INFO>'.format(now))
+        tmp = self.obj.get_full_info()
+        print(tmp)
+        return tmp
         
     def BlinkScreen(self):
         self.obj.blink()
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{}   |   <BLINK SCREEN>'.format(now))
-        
-        
-    
-
-
-
-
+ 
+    def GetScale(self):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{}   |   <GET SCALE>'.format(now))
+        tmp = self.obj._get_scale()
+        print(tmp)
+        #(position velociy acceleration)
+        return tmp
 
 
 
