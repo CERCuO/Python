@@ -33,16 +33,21 @@ class KDC101():
     def SetStageModel(self, StageModelStr):
         #PRMTZ8
         self.Stage = StageModelStr
-        if self.Stage == 'PRMTZ8':
+        if self.Stage.startswith('PRMT') == True:
             self.ScalingFactor = 1919.6418578623391
             now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             print('{}   |   <SET SCALING>'.format(now))
             print('<< Scaling factor set to {} >>'.format(self.ScalingFactor))
-        elif self.Stage == 'PRM1Z8' or 'PRM1-Z8':
+        if self.Stage.startswith('PRM1') == True:
             self.ScalingFactor = 1919.6418578623391
             now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             print('{}   |   <SET SCALING>'.format(now))
             print('<< Scaling factor set to {} >>'.format(self.ScalingFactor))
+        if self.Stage.startswith('Z8') == True:
+            self.ScalingFactor = 34304.10969
+            now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            print('{}   |   <SET SCALING>'.format(now))
+            print('<< Scaling factor set to {} >>'.format(self.ScalingFactor))            
         #elif, else for other stages
         else:
             print('<< WARNING: Scaling factor was not automatically set. >>')
@@ -148,6 +153,15 @@ class KDC101():
         
         
     def Dev_GetPosition_APT(self):
+        flag = self.is_moving()
+        
+        if flag == True:
+            count = 0
+            while flag == True and count < 5:
+                time.sleep(3) #wait to stop moving
+                flag = self.is_moving()
+                count = count + 1
+
         self.obj.send_comm(0x0411, 0x01)
         msg = self.obj.recv_comm()
         data = msg.data
@@ -175,6 +189,8 @@ class KDC101():
         
     def Dev_SetPosition_APT(self, position, Status='homed', period=1):
         # move to a given position.
+        if self.ScalingFactor != 1919.6418578623391:
+            Status = 'enabled'
         self.obj.send_comm_data(0x0453,b'\x01\x00'+strpack.pack_int(int(position),4,'<'))
         self.wait_for_status(Status, Period = period)
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
