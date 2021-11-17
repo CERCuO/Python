@@ -35,6 +35,14 @@ class KDC101():
         self.Stage = StageModelStr
         if self.Stage == 'PRMTZ8':
             self.ScalingFactor = 1919.6418578623391
+            now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            print('{}   |   <SET SCALING>'.format(now))
+            print('<< Scaling factor set to {} >>'.format(self.ScalingFactor))
+        elif self.Stage == 'PRM1Z8' or 'PRM1-Z8':
+            self.ScalingFactor = 1919.6418578623391
+            now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            print('{}   |   <SET SCALING>'.format(now))
+            print('<< Scaling factor set to {} >>'.format(self.ScalingFactor))
         #elif, else for other stages
         else:
             print('<< WARNING: Scaling factor was not automatically set. >>')
