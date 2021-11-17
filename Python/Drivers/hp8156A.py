@@ -1,5 +1,4 @@
 from __connection__ import Connection
-from globalsFile import *
 import time
 import math
 
