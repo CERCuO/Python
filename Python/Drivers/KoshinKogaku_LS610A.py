@@ -55,14 +55,18 @@ class KoshinKogaku_LS610A(Connection):
     def SetWavelength(self, val):
         strval = str(val)
         try:
+            iDot = strval.index('.') #iDot is index of '.'
+        except: #no '.' given as argument -> integer wavelength
+            strval = strval + '.' # add '.' to start of string
             iDot = strval.index('.')
-        except:
-            strval = strval + '.'
-            iDot = strval.index('.')
-        if  iDot.index('.') == 4:
+        if  iDot.index('.') == 4: #correct place
             pass
-        elif iDot.index('.') < 4:
-            wile iDot.index
+        elif iDot.index('.') < 4: #add more integer space holders
+            while iDot.index < 4:
+                iDot = '0' + iDot #add zero to string start
+        else:
+            print('<< Desired wavelength out of range! >>')
+        
         
             
         
