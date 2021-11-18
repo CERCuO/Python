@@ -6,14 +6,13 @@ Created on Wed Dec  9 13:36:29 2020
 """
 
 # Driver for YOKOGAWA AQ6370D optical spectrum analyser
+# Should also work for any other YOKOGAWA AQ6370X series OSA.
 # Developed by Daniel Hutama
-# version 1.1 -- Dec 30 2020
+# version 1.2 -- 18 Nov 2021
 # may need to run "pip install pyserial" in anaconda prompt.
 
 from __connection__ import Connection
-from globalsFile import *
 import time
-import inspect
 import numpy as np
 import matplotlib.pyplot as plt
 
