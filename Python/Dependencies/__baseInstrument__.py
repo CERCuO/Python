@@ -1,6 +1,5 @@
 import os
 import re
-from globalsFile import *
 import numpy as np 
 import inspect
 import functools
