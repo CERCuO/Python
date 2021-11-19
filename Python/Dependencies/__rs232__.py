@@ -1,4 +1,4 @@
-from globalsFile import *
+
 from __baseInstrument__ import *
 
 rs232ObjectsDict = {}

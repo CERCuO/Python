@@ -5,6 +5,11 @@ Created on Wed Nov 17 13:19:21 2021
 @author: Daniel Hutama (dhuta087@uottawa.ca)
 """
 
+
+import sys
+sys.path
+sys.path.append('C:\\Users\\srv_joule\\Desktop\\Ryan Hogan Data\\GitHub_Dump\\Python\\Dependencies')
+
 from __connection__ import Connection
 from datetime import datetime
 

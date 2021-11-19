@@ -1,8 +1,9 @@
-import visa
+
+import pyvisa as visa
+rm = visa.ResourceManager()
 import re
 import os
 
-from globalsFile import *
 from __baseInstrument__ import BaseInstrument
 
 
