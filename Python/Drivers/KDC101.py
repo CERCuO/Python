@@ -10,7 +10,6 @@ Ver 0.2
 
 from pylablib.devices import Thorlabs # pip install --user pylablib
 from pylablib.core.utils import strpack
-import numpy as np
 import time
 import math
 from datetime import datetime
