@@ -7,6 +7,7 @@ Created on Wed Nov 17 13:19:21 2021
 
 from __connection__ import Connection
 from datetime import datetime
+import re
 
 
 class KoshinKogaku_LS610A(Connection):
@@ -58,7 +59,8 @@ class KoshinKogaku_LS610A(Connection):
     def GetWavelength(self):
         res = self.__query__('WL?')
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{}   |   <GET WAVELENGTH>'.format(now))          
+        print('{}   |   <GET WAVELENGTH>'.format(now))     
+        res = re.sub('[^0-9\.]', '', res)
         ans = round(float(res), 5)
         print('<< Wavelength is currently set to  {} nm. >>'.format(ans))        
         return ans    
@@ -104,7 +106,8 @@ class KoshinKogaku_LS610A(Connection):
     def GetFrequency(self):
         res = self.__query__('WF?')
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{}   |   <GET FREQUENCY>'.format(now))       
+        print('{}   |   <GET FREQUENCY>'.format(now)) 
+        res = re.sub('[^0-9\.]', '', res)
         ans = round(float(res), 5)
         print('<< Frequency is currently set to  {} THz. >>'.format(ans))      
         return ans
@@ -150,7 +153,8 @@ class KoshinKogaku_LS610A(Connection):
     def GetTargetPower(self):
         res = self.__query__('PS?')
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{}   |   <GET USER-SET POWER>'.format(now))       
+        print('{}   |   <GET USER-SET POWER>'.format(now))    
+        res = re.sub('[^0-9\.]', '', res)
         ans = round(float(res), 2)
         print('<< Desired output power is currently set to  {} (check units). >>'.format(ans))      
         return ans        
@@ -167,12 +171,13 @@ class KoshinKogaku_LS610A(Connection):
         res = self.__query__('PU?')
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{}   |   <GET MICROWATT (uW) POWER>'.format(now))       
+        res = re.sub('[^0-9\.]', '', res)
         ans = round(float(res), 1)
         print('<< True output power is currently {} uW. >>'.format(ans))      
         return ans        
     
     
-    def Power_dBm(self, val):
+    def SetPower_dBm(self, val):
         strval = str(val)
         try:
             iDot = strval.index('.') #iDot is index of '.'
@@ -209,7 +214,7 @@ class KoshinKogaku_LS610A(Connection):
         except: 
             print('<< ERROR: Failed to query dBm power. Check connectivity and then check code. >>')
   
-    def Power_uW(self, val):
+    def SetPower_uW(self, val):
         strval = str(val)
         try:
             iDot = strval.index('.') #iDot is index of '.'
