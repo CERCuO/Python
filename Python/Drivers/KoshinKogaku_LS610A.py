@@ -65,7 +65,7 @@ class KoshinKogaku_LS610A(Connection):
         res = self.__query__('WL?')
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{}   |   <GET WAVELENGTH>'.format(now))     
-        res = re.sub('[^0-9\.]', '', res)
+        res = re.sub('[^0-9\.]', '', res) #regex filters added 2021-11-23
         ans = round(float(res), 5)
         print('<< Wavelength is currently set to  {} nm. >>'.format(ans))        
         return ans    
