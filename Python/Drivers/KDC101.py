@@ -22,12 +22,14 @@ from datetime import datetime
 
 
 class KDC101():
-    def __init__(self):
-        self.SN = Thorlabs.list_kinesis_devices()[0][0]
-        self.Description = Thorlabs.list_kinesis_devices()[0][1]
+    def __init__(self, indx):
+        self.SN = Thorlabs.list_kinesis_devices()[indx][0]
+        self.Description = Thorlabs.list_kinesis_devices()[indx][1]
         # self.obj = Thorlabs.kinesis.KinesisDevice(self.SN)
         self.obj = Thorlabs.kinesis.KinesisMotor(self.SN)
         self.ManualURL = 'https://www.thorlabs.com/software/apt/APT_Communications_Protocol_Rev_15.pdf'
+
+    
 
     def SetStageModel(self, StageModelStr):
         #PRMTZ8

@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import types
 import os
 
-from globalsFile import *
 from __baseInstrument__ import *
 
 
