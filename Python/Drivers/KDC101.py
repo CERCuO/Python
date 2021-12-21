@@ -14,7 +14,7 @@ import time
 import math
 from datetime import datetime
 
-# you will need to download and instal =l Thorlabs APT software if you do not already have it
+# you will need to download and install Thorlabs APT software if you do not already have it
 # after installation of APT, open anaconda prompt and execute the following command
 # pip install --user pylablib
 # Thorlabs runs on APT communications protocol
@@ -30,7 +30,6 @@ class KDC101():
         self.ManualURL = 'https://www.thorlabs.com/software/apt/APT_Communications_Protocol_Rev_15.pdf'
 
     
-
     def SetStageModel(self, StageModelStr):
         #PRMTZ8
         self.Stage = StageModelStr
