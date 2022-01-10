@@ -1,4 +1,4 @@
-# CERC code repository
+# CERC Python code repository
 
 Please contact Daniel Hutama if you have any questions or suggestions. 
 
@@ -7,9 +7,7 @@ README.md last edited on 16-Nov-2021.
 -----------------------------------------------------------------
 INSTRUCTIONS
 
-This repository is broken into Matlab and Python components. The long-term goal is to have equivalent functionalities in both languages. However, I am currently prioritizing Python due to the number of Python users in CERC, and the fact that Python is a free platform. 
-
-Within each of the main folders (Python or Matlab), there will be 5 folders:
+Within the Core folder, there are five folders:
     1) Dependencies
     2) Documentation
     3) Drivers
@@ -47,3 +45,5 @@ CHANGELOG for this README file.
 16-Nov-2021 | Daniel Hutama | Added instructions for repository usage. 
 
 17-Nov-2021 | Daniel Hutama | Added linebreaks for improved readability.
+
+10-Jan-2022 | Daniel Hutama | Separated Python and Matlab repositories. Changed READMEs accordingly.
