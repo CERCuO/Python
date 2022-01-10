@@ -1,7 +1,7 @@
 classdef Tektronix_AWG610
     % driver for Tektronix AWG 610 arbitrary waveform generator
     % Developed by Daniel Hutama
-    % Version 0.1 11 Nov 2021
+    % Version 0.2 10 Jan 2022
     % visadev needs Matlab R2021a or newer to work.
     
     % This device uses IEEE 488.2 
@@ -231,18 +231,6 @@ classdef Tektronix_AWG610
         end 
 
 
-    end 
-end
-            
-            GetInfo(AWG)
-            tmp = query(AWG.obj, '*IDN?');
-            disp(tmp)
-        end 
-        
-        function SendData(AWG)
-            
-        end 
-        
     end 
 end
             
