@@ -101,3 +101,24 @@ class Tektronix_AWG610(Connection):
     
     def SetTrigSlope(self, slope):
         pass
+    
+    def GetTrigSource(self):
+        pass
+    
+    def SetTrigSource(self, source):
+        pass
+    
+    def GrabScreen(self, savefilename):
+        pass
+    
+    def GetFileList(self):
+        pass
+    
+    def CopyFile(self, filename, copyname):
+        pass
+    
+    def LoadFile(self, filename):
+        pass
+    
+    def DeleteFile(self, filename):
+        pass
