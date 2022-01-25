@@ -6,7 +6,10 @@ Created on Tue Jan 25 15:00:53 2022
 """
 
 #this will only work for my computer
-#youll need to change the destination and source folders
+#youll need to change the destination and source folders in line 16
+
+# syntax:
+# out = os.system('robocopy {source folder} "{destination folder}" /s')
 
 import os
 
