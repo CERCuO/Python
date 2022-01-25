@@ -35,7 +35,7 @@ class Tektronix_AWG610(Connection):
     def GetInfo(self):
         try:
             idn = self.__query__('*IDN?')
-            return idn
+            return idn[:-2]
         except:
             print('<< ERROR: Unable to get device information. Check connectivity. >>')
             
@@ -46,7 +46,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('AWGC:RST?')
             print('<<RUN STATE>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
 
@@ -57,7 +57,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('SOUR:VOLT:AMPL?')
             print('<<AMPLITUDE>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
     
@@ -70,7 +70,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('SOUR:FREQ:CW?')
             print('<<FREQUENCY>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
             
@@ -83,7 +83,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('OUTP:STAT?')
             print('<<OUTPUT STATE>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
             
@@ -96,7 +96,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('OUTP:FILT:LPAS:FREQ?')
             print('<<LP FILTER FREQUENCY>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
                     
@@ -110,7 +110,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('SOUR:FUNC:USER?')
             print('<<CUSTOM WAVEFORM>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
             
@@ -124,7 +124,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('SOUR:ROSC:SOUR?')
             print('<<REFERENCE OSCILLATOR>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
             
@@ -138,14 +138,24 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('SOUR:VOLT:LEV:IMM:OFFS?')
             print('<<VOLTAGE OFFSET DC>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
             
     
     def SetVoltageOffsetDC(self, offset):
-        pass
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <GET VOLTAGE OFFSET DC>'.format(now))
+        try:
+            self.__write__('SOUR:VOLT:LEV:IMM:OFFS {} mV'.format(offset))
+            return self.GetVoltageOffsetDC()
+        except:
+            print('<<ERROR>> Unable to communicate with device.')
+ 
     
+ 
+    
+ 
     def ResetAWG(self):
         pass
     
@@ -158,7 +168,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('TRIG:SEQ:IMP?')
             print('<<TRIGGER IMPEDANCE>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
             
@@ -171,7 +181,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('TRIG:SEQ:LEV?')
             print('<<TRIGGER LEVEL>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
             
@@ -185,7 +195,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('TRIG:POL?')
             print('<<TRIGGER POLARITY>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
             
@@ -199,7 +209,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('TRIG:SLOP?')
             print('<<TRIGGER SLOPE>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
             
@@ -212,7 +222,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('TRIG:SEQ:SOUR?')
             print('<<TRIGGER SOURCE>> | {}'.format(tmp))
-            return tmp
+            return tmp[:-2]
         except:
             print('<<ERROR>> Unable to communicate with device.')
             
