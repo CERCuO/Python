@@ -55,7 +55,7 @@ class Gpib(BaseInstrument):
     def __init__(self,addressString):
         self._visaObj = initGpib(addressString)
         self.__setTimeout__(3000) # 3 seconds
-        self.connectionType = ConnectionTypes.GPIB
+#        self.connectionType = ConnectionTypes.GPIB
 
     def __del__(self):
         """

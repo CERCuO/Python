@@ -13,6 +13,12 @@ Created on Mon Jan 17 13:52:53 2022
 # This devices uses IEEE 488.2
 # Standard Commands for Programmable Instruments (SCPI)
 
+#be sure to add pwd to syspath
+
+from __connection__ import Connection
+from datetime import datetime
+import re
+
 class Tektronix_AWG610(Connection):
     def __init__(self,addressString):
         Connection.__init__(self,addressString)
