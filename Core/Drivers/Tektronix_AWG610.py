@@ -315,16 +315,50 @@ class Tektronix_AWG610(Connection):
             
             
     def GrabScreen(self, savefilename):
-        pass
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <GRAB SCREEN | {}>'.format(now, savefilename))        
+        try:
+            self.__write__('MMEM:NAME "{}";:HCOP:SDUM:IMM'.format(savefilename))
+            print("File has been saved.")
+        except:
+            print('<<ERROR>> Unable to communicate with device.')
     
-    def GetFileList(self):
-        pass
+    def GetFileList(self, location='MAIN'):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <DISPLAY FILE LIST>'.format(now))        
+        try:
+            return self.__query__('MMEM:CAT? "{}"'.format(location))
+        except:
+            print('<<ERROR>> Unable to communicate with device.')
     
-    def CopyFile(self, filename, copyname):
-        pass
+    
+    def CopyFile(self, filename, copyname, sourcefolder ="MAIN", targetfolder="MAIN"):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <COPY FILE | SOURCE:{} TARGET:{} SOURCEFOLDER:{} TARGETFOLDER:{}>'.format(now, filename, copyname, sourcefolder, targetfolder))        
+        try:
+            self.__write__('MMEM:COPY "{}" "{}" "{}" "{}"'.format(filename, sourcefolder, copyname, targetfolder))
+            print("File has been copied.")
+        except:
+            print('<<ERROR>> Unable to communicate with device.')
+    
     
     def LoadFile(self, filename):
-        pass
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <LOAD FILE | {}>'.format(now, filename))        
+        try:
+            self.__write__('MMEM:DATA "{}"'.format(filename))
+            print("File loaded.")
+        except:
+            print('<<ERROR>> Unable to communicate with device.')
+    
     
     def DeleteFile(self, filename):
-        pass
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <DELETE FILE | {}>'.format(now, filename))        
+        try:
+            self.__write__('MMEM:DEL "{}"'.format(filename))
+            print("File deleted.")
+        except:
+            print('<<ERROR>> Unable to communicate with device.')
+    
+    
