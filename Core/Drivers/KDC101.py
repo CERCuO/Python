@@ -51,6 +51,13 @@ class KDC101():
         #elif, else for other stages
         else:
             print('<< WARNING: Scaling factor was not automatically set. >>')
+            
+    def debug(self, hexcmd):
+         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+         print('{}   |   <DEBUGGING>'.format(now))     
+         self.obj.send_comm(hexcmd, 0x01)
+         data = self.obj.recv_comm().data
+         return strpack.unpack_uint(data[2:6],"<")
     
     def GetInfo(self):
          now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
