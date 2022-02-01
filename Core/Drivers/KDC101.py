@@ -3,7 +3,9 @@
 Created on Thu Sep 30 20:01:34 2021
 
 Ver 0.2 
-16-Nov-2021
+30-Sep-2021 | Version 0.1 | Daniel Hutama | Basic connection functionality. 
+16-Nov-2021 | Version 0.2 | Daniel Hutama | Added functionality for linear and rotational stages
+01-Feb-2022 | Version 1.0 | Daniel Hutama | Fixed functionality for rotational stages.
 
 @author: Daniel Hutama; dhuta087@uottawa.ca
 """
@@ -125,6 +127,8 @@ class KDC101():
     
     def is_moving(self):
         tmp = self.GetStatus()
+        if len(tmp) == 0:
+            return 1
         res_fw = 'moving_fw' in tmp
         res_bk = 'moving_bk' in tmp
         if res_fw == True:
@@ -148,6 +152,10 @@ class KDC101():
         elapsed = time.time()-start
         flag = 0
         while flag == 0 and elapsed<Timeout:
+            if self.is_moving == 1:
+                elapsed = time.time() - start
+                flag = 0
+                time.sleep(Period)
             if self.is_moving() == True:
                 elapsed = time.time() - start
                 flag = 0
@@ -211,6 +219,23 @@ class KDC101():
         else:
             print('<< ERROR: Unable to set desired position. >>')
             print('<< Current position is {:.4f}'.format(pos))
+            
+        if self.ScalingFactor == 1919.6418578623391:
+            Status = 'enabled'
+        self.obj.send_comm_data(0x0453,b'\x01\x00'+strpack.pack_int(int(position),4,'<'))
+        self.wait_for_status(Status, Period = period)
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{}   |   <GET POSITION>'.format(now))
+        time.sleep(3)
+        pos = self.GetPosition()
+        flag = math.isclose(float(pos), float(position)/self.ScalingFactor, abs_tol = 0.01)
+        if  flag == True:
+            print('<< Position is properly set. >>')
+            print('<< Current position is {:.4f}'.format(pos))
+        else:
+            print('<< ERROR: Unable to set desired position. >>')
+            print('<< Current position is {:.4f}'.format(pos))            
+            
 
     def SetPosition(self, position):
         #optional arguments can be changed in Dev_SetPosition_APT()
