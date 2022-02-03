@@ -11,6 +11,8 @@ Created on Tue Jan 25 15:00:53 2022
 # syntax:
 # out = os.system('robocopy {source folder} "{destination folder}" /s')
 
+from datetime import datetime
+
 import os
 
 out = os.system('robocopy C:\depot\CERC "G:\Shared drives\Lundeen Lab Cloud Storage\Individuals\Daniel\Local" /s')
@@ -41,3 +43,6 @@ if out == 8:
     
 if out > 8:
     print('There was at least one failure during the copy operation.')
+    
+now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+print('{}   |   <PUSH TO DRIVE>'.format(now)) 
