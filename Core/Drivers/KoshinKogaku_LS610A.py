@@ -8,7 +8,7 @@ Created on Wed Nov 17 13:19:21 2021
 
 # import sys
 # sys.path
-# sys.path.append('C:\\Users\\srv_joule\\Desktop\\Ryan Hogan Data\\GitHub_Dump\\Python\\Dependencies')
+# sys.path.append('C:\\Users\\srv_joule\\Desktop\\Ryan Hogan Data\\GitHub_Dump\\Python\\Core\\Dependencies')
 
 from __connection__ import Connection
 from datetime import datetime
@@ -169,6 +169,7 @@ class KoshinKogaku_LS610A(Connection):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{}   |   <GET dBm POWER>'.format(now))       
         ans = round(float(res), 2)
+        res = re.sub('[^0-9\.]', '', res)
         print('<< True output power is currently {} dBm. >>'.format(ans))      
         return ans        
     
