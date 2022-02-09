@@ -45,6 +45,9 @@ class Thorlabs_DCC1240M():
          print('{}   |   <SNAP PHOTO>'.format(now))           
          return self.obj.snap()
          
+    #gain, saturation, denoising, extrema scaling,  
+        
+        
 def ShowImage(image, cmap = 0):
      if cmap == 1:
          return plt.imshow(image)
