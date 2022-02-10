@@ -5,6 +5,10 @@ Created on Mon Jan 17 13:52:53 2022
 @author: danhu
 """
 
+# import sys
+# sys.path.append('C:\\depot\\CERC\\Python\\Core\\Drivers\\Tektronix_AWG610_files')
+
+
 # driver for Tektronix AWG 610 arbitrary waveform generator
 # developed by Daniel Hutama
 # dhuta087@uottawa.ca
@@ -47,6 +51,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('AWGC:RST?')
             print('<<RUN STATE>> | {}'.format(tmp))
+            print('0 - WG is stopped. | 1 - WG is waiting for a trigger. | 2 - WG is running.')
             return tmp[:-2]
         except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
@@ -150,12 +155,13 @@ class Tektronix_AWG610(Connection):
             print("Available frequencies are 20e6, 50e6, 100e6, 200e6, 9.9e37 (infinity).")
             return self.GetLowPassFilterFrequency()
     
-    def GetCustomWaveform(self):
+    def GetCustomWaveform(self, channel):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{} | COMMAND: <GET CUSTOM WAVEFORM>'.format(now))
+        channel = str(channel)
+        print('{} | COMMAND: <GET CUSTOM WAVEFORM ON CHANNEL {}>'.format(now, channel))
         try:
-            tmp = self.__query__('SOUR:FUNC:USER?')
-            print('<<CUSTOM WAVEFORM>> | {}'.format(tmp))
+            tmp = self.__query__('SOUR{}:FUNC:USER?'.format(channel))
+            print('<<CUSTOM WAVEFORM>> | {} | CHANNEL {}'.format(tmp, channel))
             return tmp[:-2]
         except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
@@ -163,13 +169,13 @@ class Tektronix_AWG610(Connection):
                     
             
     
-    def SetCustomWaveform(self, filename):
+    def SetCustomWaveform(self, channel, filename, directory = 'MAIN'):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{} | COMMAND: <SET CUSTOM WAVEFORM | {}>'.format(now, filename))        
+        print('{} | COMMAND: <SET CUSTOM WAVEFORM ON CHANNEL {}| {}>'.format(now, channel, filename))        
         try:
-            mystring = 'SOUR:FUNC:USER "{}" "MAIN"'.fromat(filename)
+            mystring = 'SOUR{}:FUNC:USER "{}","{}"'.format(channel, filename, directory)
             self.__write__(mystring)
-            return self.GetCustomWaveform()
+            return self.GetCustomWaveform(channel)
         except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
             print(e)
