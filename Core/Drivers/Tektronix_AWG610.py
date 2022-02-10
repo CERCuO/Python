@@ -373,13 +373,55 @@ class Tektronix_AWG610(Connection):
     
     def GetFileList(self, location='MAIN'):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{} | COMMAND: <DISPLAY FILE LIST>'.format(now))        
+        print('{} | COMMAND: <DISPLAY FILE LIST>'.format(now)) 
+        if location == 'MAIN':
+            print('Displaying files in "MAIN"')
+            print('To display contents of another location, pass the location name as a string into the second argument.')
         try:
             return self.__query__('MMEM:CAT? "{}"'.format(location))
         except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
             print(e)
-                    
+            
+    def GetCurrentDirectory(self):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <GET CURRENT DIRECTORY>'.format(now)) 
+        try:
+            return self.GetSTR('MMEM:CDIR?')
+        except Exception as e:
+            print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+    
+    def SetCurrentDirectory(self, pathstr):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <SET CURRENT DIRECTORY "{}">'.format(now, pathstr))      
+        try:
+            self.SetSTR('MMEM:CDIR "{}"'.format(pathstr))
+            print(self.GetCurrentDirectory())
+        except Exception as e:
+            print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+            
+    def MakeNewDirectory(self, dirname):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <MAKE DIRECTORY "{}">'.format(now, dirname))
+        try:
+            self.SetSTR('MMEM:MDIR "{}"'.format(dirname))
+            print('Current directory is {}'.format(self.GetCurrentDirectory()))
+            print('Current directory contents are {}'.format(self.GetFileList()))
+        except Exception as e:
+            print('<<ERROR>> Unable to communicate with device.')
+            print(e)            
+            
+    def MoveFile(self, filename, filedir, newfilename, newfiledir):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <MOVE FILE | FNAME:"{}" | FDIR:"{}" | NEW FNAME:"{}" | NEW FDIR:"{}">'.format(now, filename, filedir, newfilename, newfiledir))
+        try:
+            self.SetSTR('MMEM:MOVE "{}", "{}", "{}", "{}"'.format(filename, filedir, newfilename, newfiledir))
+        except Exception as e:
+            print('<<ERROR>> Unable to communicate with device.')
+            print(e)            
+        
     
     def CopyFile(self, filename, copyname, sourcefolder ="MAIN", targetfolder="MAIN"):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -390,6 +432,15 @@ class Tektronix_AWG610(Connection):
         except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
             print(e)
+            
+    def GetCurrentFile(self):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <GET CURRENT FILENAME>'.format(now))
+        try:
+            return self.GetSTR('MMEM:NAME?')
+        except Exception as e:
+            print('<<ERROR>> Unable to communicate with device.')
+            print(e)        
                     
     
     def LoadFile(self, filename):
@@ -430,14 +481,28 @@ class Tektronix_AWG610(Connection):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{} | QUERY: <{}>'.format(now, cmd))
         try:
-            self.__query__('{}'.format(cmd))
+            return self.__query__('{}'.format(cmd))
         except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
             print(e)
                     
+    def CheckConnection(self): #Instructs the AWG to generate an audible tone.
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <MAKE AUDIBLE BEEP>'.format(now))
+        try: 
+            self.SetSTR('SYST:BEEP')
+        except Exception as e:
+            print('<<ERROR>> Unable to communicate with device.')
+            print(e)            
             
-        
-        
+    def GetUptime(self):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <GET UPTIME>'.format(now))
+        try:
+            return self.GetSTR('SYST:UPT')
+        except Exception as e:
+            print('<<ERROR>> Unable to communicate with device.')
+            print(e)                        
         
         
         
