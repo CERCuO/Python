@@ -37,9 +37,9 @@ class Tektronix_AWG610(Connection):
         try:
             idn = self.__query__('*IDN?')
             return idn[:-2]
-        except:
+        except Exception as e:
             print('<< ERROR: Unable to get device information. Check connectivity. >>')
-            
+            print(e)
             
     def GetRunState(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -48,8 +48,10 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('AWGC:RST?')
             print('<<RUN STATE>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
 
     
     def GetAmplitude(self):
@@ -59,8 +61,10 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('SOUR:VOLT:AMPL?')
             print('<<AMPLITUDE>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
     
     def SetAmplitude(self, amplitude):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -68,8 +72,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('SOUR:VOLT:AMPL {}'.format(amplitude))
             return self.GetAmplitude()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
     
     def GetFrequency(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -78,8 +84,10 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('SOUR:FREQ:CW?')
             print('<<FREQUENCY>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
             
     def SetFrequency(self, freq):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -87,8 +95,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('SOUR:FREQ:CW {}'.format(freq))
             return self.GetFrequency()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
     
     def GetOutputState(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -97,17 +107,20 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('OUTP:STAT?')
             print('<<OUTPUT STATE>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
-            
+            print(e)
+                    
     def SetOutputState(self, state):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{} | COMMAND: <SET OUTPUT STATE | {}>'.format(now, state))        
         try:
             self.__write__('OUTP:STAT {}'.format(state))
             return self.GetOutputState()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
     
     def GetLowPassFilterFrequency(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -116,8 +129,10 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('OUTP:FILT:LPAS:FREQ?')
             print('<<LP FILTER FREQUENCY>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
                     
     def SetLowPassFilterFrequency(self, freq):
         options = [20e6, 50e6, 100e6, 200e6, 9.9e37]
@@ -127,8 +142,9 @@ class Tektronix_AWG610(Connection):
             try:
                 self.__write__('OUTP:FILT:LPAS:FREQ {}'.format(freq))
                 return self.GetLowPassFilterFrequency()
-            except:
+            except Exception as e:
                 print('<<ERROR>> Unable to communicate with device.')
+                print(e)
         else:
             print("<<ERROR>> Specified frequency is not in the list of available options.")
             print("Available frequencies are 20e6, 50e6, 100e6, 200e6, 9.9e37 (infinity).")
@@ -141,8 +157,10 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('SOUR:FUNC:USER?')
             print('<<CUSTOM WAVEFORM>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
             
     
     def SetCustomWaveform(self, filename):
@@ -152,8 +170,10 @@ class Tektronix_AWG610(Connection):
             mystring = 'SOUR:FUNC:USER "{}" "MAIN"'.fromat(filename)
             self.__write__(mystring)
             return self.GetCustomWaveform()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
             
             
     def GetReferenceOscillator(self):
@@ -163,8 +183,10 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('SOUR:ROSC:SOUR?')
             print('<<REFERENCE OSCILLATOR>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
             
     
     def SetReferenceOscillator(self, ref):
@@ -173,8 +195,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('SOUR:ROSC:SOUR {}'.format(ref))
             return self.GetReferenceOscillator()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
     
     def GetVoltageOffsetDC(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -183,8 +207,10 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('SOUR:VOLT:LEV:IMM:OFFS?')
             print('<<VOLTAGE OFFSET DC>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
             
     
     def SetVoltageOffsetDC(self, offset):
@@ -193,8 +219,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('SOUR:VOLT:LEV:IMM:OFFS {} mV'.format(offset))
             return self.GetVoltageOffsetDC()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
  
  
     def ResetAWG(self):
@@ -203,8 +231,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('*RST')
             return self.GetOutputState()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
     
     def SetForceTrigger(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -212,8 +242,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('*TRG')
             return self.GetTrigLevel()
-        except:
-            print('<<ERROR>> Unable to communicate with device.')        
+        except Exception as e:
+            print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                       
     
     def GetTrigImpedance(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -222,8 +254,10 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('TRIG:SEQ:IMP?')
             print('<<TRIGGER IMPEDANCE>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
             
     def SetTrigImpedance(self, impedance):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -231,8 +265,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('TRIG:SEQ:IMP {}'.format(impedance))
             return self.GetTrigImpedance()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
     
     def GetTrigLevel(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -241,19 +277,20 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('TRIG:SEQ:LEV?')
             print('<<TRIGGER LEVEL>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
-            
-    
+            print(e)
+                    
     def SetTrigLevel(self, level):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{} | COMMAND: <SET TRIGGER LEVEL | {}>'.format(now, level))        
         try:
             self.__write__('TRIG:SEQ:LEV {}'.format(level))
             return self.GetTrigLevel()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
-            
+            print(e)
+                    
             
     def GetTrigPolarity(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -262,9 +299,10 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('TRIG:POL?')
             print('<<TRIGGER POLARITY>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
-            
+            print(e)
+                    
     
     def SetTrigPolarity(self, polarity):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -272,9 +310,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('TRIG:POL {}'.format(polarity))
             return self.GetTrigPolarity()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
-    
+            print(e)
+                    
     def GetTrigSlope(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{} | COMMAND: <GET TRIGGER SLOPE>'.format(now))
@@ -282,8 +321,10 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('TRIG:SLOP?')
             print('<<TRIGGER SLOPE>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
             
     def SetTrigSlope(self, slope):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -291,8 +332,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('TRIG:SLOP {}'.format(slope))
             return self.GetTrigSlope()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
     
     def GetTrigSource(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -301,17 +344,20 @@ class Tektronix_AWG610(Connection):
             tmp = self.__query__('TRIG:SEQ:SOUR?')
             print('<<TRIGGER SOURCE>> | {}'.format(tmp))
             return tmp[:-2]
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
-            
+            print(e)
+                    
     def SetTrigSource(self, source):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{} | COMMAND: <SET TRIGGER SOURCE | {}>'.format(now, source))        
         try:
             self.__write__('TRIG:SEQ:SOUR {}'.format(source))
             return self.GetTrigSource()
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
             
             
     def GrabScreen(self, savefilename):
@@ -320,17 +366,20 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('MMEM:NAME "{}";:HCOP:SDUM:IMM'.format(savefilename))
             print("File has been saved.")
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
     
     def GetFileList(self, location='MAIN'):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{} | COMMAND: <DISPLAY FILE LIST>'.format(now))        
         try:
             return self.__query__('MMEM:CAT? "{}"'.format(location))
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
-    
+            print(e)
+                    
     
     def CopyFile(self, filename, copyname, sourcefolder ="MAIN", targetfolder="MAIN"):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -338,9 +387,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('MMEM:COPY "{}" "{}" "{}" "{}"'.format(filename, sourcefolder, copyname, targetfolder))
             print("File has been copied.")
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
-    
+            print(e)
+                    
     
     def LoadFile(self, filename):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -348,8 +398,10 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('MMEM:DATA "{}"'.format(filename))
             print("File loaded.")
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
     
     
     def DeleteFile(self, filename):
@@ -358,7 +410,50 @@ class Tektronix_AWG610(Connection):
         try:
             self.__write__('MMEM:DEL "{}"'.format(filename))
             print("File deleted.")
-        except:
+        except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
+            
+    def SetSTR(self, cmd):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | COMMAND: <{}>'.format(now, cmd))  
+        try:
+            self.__write__('{}'.format(cmd))
+            print('Command sent successfully.')
+        except Exception as e:
+            print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
+
+    def GetSTR(self, cmd):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{} | QUERY: <{}>'.format(now, cmd))
+        try:
+            self.__query__('{}'.format(cmd))
+        except Exception as e:
+            print('<<ERROR>> Unable to communicate with device.')
+            print(e)
+                    
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     
     
