@@ -15,15 +15,17 @@ Created on Mon Jan 17 13:52:53 2022
 # Version 00.100 | 17 Jan 2022 | Python build structure translated from Matlab
 # Version 00.101 | 25 Jan 2022 | Added query (read) functionalilty
 # Version 01.000 | 26 Jan 2022 | Added write functionality
+# Version 01.100 | 10 Feb 2022 | Fixed bugs in AWG file navigation
 
 # This devices uses IEEE 488.2
 # Standard Commands for Programmable Instruments (SCPI)
 
 #be sure to add "drivers" and "dependencies" folder to your machine's syspath
 # github.com/CERCuO/Python
-import sys
-sys.path.append('C:\\depot\\CERC\\Python\\Core\\Dependencies')
-sys.path.append('C:\\depot\\CERC\\Python\\Core\\Drivers')
+# The next 3 lines are specific for my computer, where I dumped all the github files into \depot\CERC
+# import sys
+# sys.path.append('C:\\depot\\CERC\\Python\\Core\\Dependencies')
+# sys.path.append('C:\\depot\\CERC\\Python\\Core\\Drivers')
 
 
 # you may need to run this class twice if modules are not properly loaded.
