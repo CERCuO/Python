@@ -51,12 +51,12 @@ class KoshinKogaku_LS610A(Connection):
     def OutputON(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{}   |   <SET OUTPUT ON>'.format(now))        
-        self.__write__('ST1\r\n')
+        self.__write__('ST1')
         
     def OutputOFF(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{}   |   <SET OUTPUT OFF>'.format(now))        
-        self.__write__('ST0\r\n')
+        self.__write__('ST0')
         
         
     def GetStatusAttenuator(self):
