@@ -3,12 +3,17 @@
 Created on Wed Nov 17 13:19:21 2021
 
 @author: Daniel Hutama (dhuta087@uottawa.ca)
+
+# driver for Koshin Kogaku LS610A TLS
+# Version 00.100 | 17 Nov 2021 | Basic functionality added
+# Version 00.200 | 11 Feb 2022 | Bug fixes to critical Get/Set commands.
+
 """
 
 
-# import sys
-# sys.path
-# sys.path.append('C:\\Users\\srv_joule\\Desktop\\Ryan Hogan Data\\GitHub_Dump\\Python\\Core\\Dependencies')
+import sys
+sys.path
+sys.path.append('C:\\Users\\srv_joule\\Desktop\\Ryan Hogan Data\\GitHub_Dump\\Python\\Core\\Dependencies')
 
 from __connection__ import Connection
 from datetime import datetime
@@ -31,7 +36,7 @@ class KoshinKogaku_LS610A(Connection):
         decision = input('<< WARNING: You are about to initialize the device to factory default settings. Do you wish to proceed? (Y/N) >>')
         if decision.upper() == 'Y':
             try:
-                self.__write__('*RST')
+                self.__write__('*RST\r\n')
                 now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
                 print('{}   |   <RESET COMMAND SENT>'.format(now))
             except:
@@ -46,12 +51,12 @@ class KoshinKogaku_LS610A(Connection):
     def OutputON(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{}   |   <SET OUTPUT ON>'.format(now))        
-        self.__write__('ST1')
+        self.__write__('ST1\r\n')
         
     def OutputOFF(self):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print('{}   |   <SET OUTPUT OFF>'.format(now))        
-        self.__write__('ST0')
+        self.__write__('ST0\r\n')
         
         
     def GetStatusAttenuator(self):
@@ -92,10 +97,10 @@ class KoshinKogaku_LS610A(Connection):
         else:
             strval = strval[0:9]
             print('<< WARNING: Wavelength truncated to 5 decimal places. >>')
-            
+        strval = strval + '/r/n'
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{}   |   <SET WAVELENGTH {}>'.format(now, strval))                 
-        self.__write__('W{}'.format(strval)) # send formatted command
+        print('{}   |   <SET WAVELENGTH {}>'.format(now, strval[:-4]))                 
+        self.__write__('WL{}'.format(strval)) # send formatted command
         
         try:
             wl = self.GetWavelength()
@@ -104,9 +109,9 @@ class KoshinKogaku_LS610A(Connection):
             else:
                 print('<< ERROR: Unable to set wavelength to the desired value. Wavelength is currently {} nm. >>'.format(wl))
             return wl
-        except: 
+        except Exception as e: 
             print('<< ERROR: Failed to query wavelength value. Check connectivity and then check code. >>')
-        
+            print(e)
     
     def GetFrequency(self):
         res = self.__query__('WF?')
@@ -139,9 +144,9 @@ class KoshinKogaku_LS610A(Connection):
         else:
             strval = strval[0:8]
             print('<< WARNING: Frequency truncated to 5 decimal places. >>')
-            
+        strval = strval + '/r/n'
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{}   |   <SET FREQUENCY {}>'.format(now, strval))                 
+        print('{}   |   <SET FREQUENCY {}>'.format(now, strval[:-4]))                 
         self.__write__('WF{}'.format(strval)) # send formatted command
         
         try:
@@ -151,9 +156,9 @@ class KoshinKogaku_LS610A(Connection):
             else:
                 print('<< ERROR: Unable to set frequency to the desired value. Frequency is currently {} THz. >>'.format(wf))
             return wf
-        except: 
+        except Exception as e: 
             print('<< ERROR: Failed to query frequency value. Check connectivity and then check code. >>')
-
+            print(e)
 
     def GetTargetPower(self):
         res = self.__query__('PS?')
@@ -205,9 +210,9 @@ class KoshinKogaku_LS610A(Connection):
         else:
             strval = strval[0:5]
             print('<< WARNING: dBm power truncated to 2 decimal places. >>')
-            
+        strval = strval + '/r/n'            
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{}   |   <SET dBm POWER {}>'.format(now, strval))                 
+        print('{}   |   <SET dBm POWER {}>'.format(now, strval[:-4]))                 
         self.__write__('PW{}'.format(strval)) # send formatted command
         
         try:
@@ -242,9 +247,9 @@ class KoshinKogaku_LS610A(Connection):
         else:
             strval = strval[0:5]
             print('<< WARNING: uW power truncated to 1 decimal place. >>')
-            
+        strval = strval + '/r/n'            
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{}   |   <SET uW POWER {}>'.format(now, strval))                 
+        print('{}   |   <SET uW POWER {}>'.format(now, strval[:-4]))                 
         self.__write__('PU{}'.format(strval)) # send formatted command
         
         try:
