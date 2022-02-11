@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# AOM project
+**/Drivers/Tektronix_AWG610_files
