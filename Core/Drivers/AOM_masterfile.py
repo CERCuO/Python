@@ -11,6 +11,7 @@ Created on Fri Feb 11 08:42:33 2022
 from datetime import datetime
 import time
 import numpy as np
+import os
 
 
 ################################
@@ -42,6 +43,45 @@ for i in range(1):
     RFpulseAmpl = np.convolve(Optical_Target, filtfun, 'same')
     
     RFWaveform = np.real(np.exp(1j * 2 * np.pi * t * Freq) * Optical_Target)
+    
+    
+    fname = 'test{}'.format(i)
+    
+    cwd = os.getcwd()
+    if cwd != 'C:\\depot\\CERC\\Python\\Core\\Drivers': #this is specific for my computer - you may need to change the pathname.
+        os.chdir('C:\\depot\\CERC\\Python\\Core\\Drivers\\Tektronix_AWG610_files')
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     
     
     

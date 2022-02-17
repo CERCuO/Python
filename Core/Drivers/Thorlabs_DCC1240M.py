@@ -76,15 +76,18 @@ class Thorlabs_DCC1240M():
          return self.obj.get_detector_size()        # returns tuple (width, height)
         
         
-    def ShowImage(image, cmap = 0):
+    def ShowImage(self, image, cmap = 0):
          now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
          print('{}   |   <DISPLAY IMAGE>'.format(now))           
-         figure(figsize = (10,10))
+         fig = figure(figsize = (10,10))
+         ax  = fig.add_subplot(111)
          if cmap == 1:
              return plt.imshow(image)
          elif cmap == 0:
              plt.gray()
              plt.imshow(image)
+             ax.set_xlim((-self.GetDetectorSize[0]/2, self.GetDetectorSize[0]/2))
+             ax.set_ylim((-self.GetDetectorSize[1]/2, self.GetDetectorSize[1]/2))
              plt.show()
          
          
