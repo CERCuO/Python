@@ -22,6 +22,7 @@ import time
 
 
 # you need to change the path to whereever your calibration file 
+# cam = camera.XevaCam(calibration='C:\\Program Files\\Common Files\\XenICs\\Runtime\Calibrations\\0222-50us_10361.xca')
 cam = camera.XevaCam(calibration='C:\\depot\\CERC\\Xenics_control\\BOBCAT320-9849\\Software\\Calibrations\\XC-(14-12-2017)-500us_9849.xca')
 # Open connection to camera
 with cam.opened() as c:
