@@ -11,6 +11,10 @@ Ver 0.2
 """
 
 from pylablib.devices import Thorlabs # pip install --user pylablib
+# may run into numpy error if you are using an outdated version
+# to fix any issue related to numpy 'loads' function, run the following in Anaconda Prompt
+# pip install --upgrade numpy
+# pip install --upgrade pylablib
 from pylablib.core.utils import strpack
 import time
 import math

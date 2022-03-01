@@ -5,7 +5,20 @@ Created on Thu Nov 11 16:04:10 2021
 @author: Daniel Hutama 
 dhuta087@uottawa.ca
 """
+
+# This file is not as developed as KDC101.py. As a result, functionality on KPZ may not be complete. 
+
+
+
+
+
+
+
 from pylablib.devices import Thorlabs
+# may run into numpy error if you are using an outdated version
+# to fix any issue related to numpy 'loads' function, run the following in Anaconda Prompt
+# pip install --upgrade numpy
+# pip install --upgrade pylablib
 import numpy as np
 import time
 from datetime import datetime

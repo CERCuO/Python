@@ -6,15 +6,59 @@ Created on Fri Feb 11 08:42:33 2022
 
 
 # Version 00.100 | 11 Feb 2022 | Python build structure translated from Matlab
+# Version 00.101 | 01 Mar 2022 | Progress savepoint on Matlab code conversion
 """
 
 from datetime import datetime
 import time
 import numpy as np
 import os
-
-
 ################################
+'''
+Check cables
+    1. AOM-AWG connection on Ch1
+    2. AWG marker to laser, oscilloscope
+    3. AWG - computer control
+    4. Camera - computer control
+
+
+1. Laser on
+2. AWG on
+3. Camera on
+4. Thorlabs camera software
+5. code execution
+    a. initialize camera
+        I. create handle
+        II. Set params - bitmap, 8-bit RGB, software trigger mode, 10 ms
+    b. Initialize AWG
+        I. Set RF params
+        II. create filename, set Gaussian filter function
+        III. Load waveform file to AWG
+    c. Generate waveform from file on AWG
+    d. Image reconstruction
+'''
+################################
+
+############### next 3 lines are in case you don't have Dependencies in your system path ##############
+# import sys
+# sys.path 
+# sys.path.append('C:\\depot\\CERC\\Python\\Core\\Dependencies')
+#######################################################################################################
+
+
+cam = Thorlabs_DCC1240M(0) # create camera handle
+cam.
+
+
+
+
+
+
+
+
+
+
+
 #parameters copied from old matlab file.
 dt = 1/0.96e9
 tmax = 1e-6
@@ -24,6 +68,8 @@ Optical_x = t*vs
 
 Freq = 80e6
 Amplitudes = 0.9
+
+
 
 ################################
 for i in range(1):

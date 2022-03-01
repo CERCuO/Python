@@ -16,6 +16,11 @@ Created on Thu Feb  3 11:31:09 2022
 
 
 from pylablib.devices import Thorlabs # pip install --user pylablib
+# may run into numpy error if you are using an outdated version
+# to fix any issue related to numpy 'loads' function, run the following in Anaconda Prompt
+# pip install --upgrade numpy
+# pip install --upgrade pylablib
+
 from pylablib.devices import uc480 as cam
 import numpy as np
 from datetime import datetime
