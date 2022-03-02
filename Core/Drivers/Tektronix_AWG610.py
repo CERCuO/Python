@@ -23,9 +23,9 @@ Created on Mon Jan 17 13:52:53 2022
 #be sure to add "drivers" and "dependencies" folder to your machine's syspath
 # github.com/CERCuO/Python
 # The next 3 lines are specific for my computer, where I dumped all the github files into \depot\CERC
-# import sys
-# sys.path.append('C:\\depot\\CERC\\Python\\Core\\Dependencies')
-# sys.path.append('C:\\depot\\CERC\\Python\\Core\\Drivers')
+import sys
+sys.path.append('C:\\depot\\CERC\\Python\\Core\\Dependencies')
+sys.path.append('C:\\depot\\CERC\\Python\\Core\\Drivers')
 
 
 # you may need to run this class twice if modules are not properly loaded.

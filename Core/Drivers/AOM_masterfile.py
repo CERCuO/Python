@@ -45,9 +45,11 @@ Check cables
 # sys.path.append('C:\\depot\\CERC\\Python\\Core\\Dependencies')
 #######################################################################################################
 
-
-cam = Thorlabs_DCC1240M(0) # create camera handle
-cam.
+try:
+    cam = Thorlabs_DCC1240M(0) # create camera handle
+    AWG = AWG = Tektronix_AWG610('0.1')
+except Exception as E:
+    print('<<ERROR: Unable to initialize devices. Check connection and device addresses.>>')
 
 
 
