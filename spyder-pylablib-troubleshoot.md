@@ -38,3 +38,27 @@ Again let both install themselves and their dependencies.
 Congrats, this should have installed the prerequisite packages for equipment control to and allow you to use them with `spyder` in their own environment. 
 
 Let us know if these instructions no longer work for you. Remember to **not** update packages these packages (`pyqt5, pyqtwebengine, spyder, pylablib`) as these will most likely break your installation. 
+
+
+
+
+
+
+
+
+
+____________________________________________________________________
+Section added March 03, 2022 by Daniel Hutama
+
+Alternatively, you can set up your fresh install to work with Spyder. After installing through Anaconda, execute the following pip commands in your Anaconda prompt.
+
+pip install --upgrade spyder=4.1.5 --user
+pip uninstall pyqt5
+pip install --upgrade pyqt5=5.12.3 --user
+pip install pylablib --user
+pip install pyvisa
+If you still have issues after this, try downgrading to Python 3.6 and use pip to upgrade/downgrade any conflicting dependencies.
+
+If you still have issues, feel free to contact me.
+
+-DH
