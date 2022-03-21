@@ -43,17 +43,21 @@ Check cables
 # import sys
 # sys.path 
 # sys.path.append('C:\\depot\\CERC\\Python\\Core\\Dependencies')
+# sys.path.append('C:\\depot\\CERC\\Python\\Core\\Drivers')
 #######################################################################################################
 
 try:
     cam = Thorlabs_DCC1240M(0) # create camera handle
-    AWG = AWG = Tektronix_AWG610('0.1')
+    AWG = Tektronix_AWG610('0.1')
 except Exception as E:
     print('<<ERROR: Unable to initialize devices. Check connection and device addresses.>>')
+    print(E)
 
 
 
-
+# Load file from AWG main memory 
+# function is case sensitive (e.g. use wfm instead of WFM)
+AWG.SetCustomWaveform(1, 'test_21_03_2022.wfm')
 
 
 

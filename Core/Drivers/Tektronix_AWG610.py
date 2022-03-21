@@ -113,7 +113,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('OUTP:STAT?')
             print('<<OUTPUT STATE>> | {}'.format(tmp))
-            return tmp[:-2]
+            return tmp[:-1]
         except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
             print(e)
@@ -284,7 +284,7 @@ class Tektronix_AWG610(Connection):
         try:
             tmp = self.__query__('TRIG:SEQ:LEV?')
             print('<<TRIGGER LEVEL>> | {}'.format(tmp))
-            return tmp[:-2]
+            return tmp[:-1]
         except Exception as e:
             print('<<ERROR>> Unable to communicate with device.')
             print(e)

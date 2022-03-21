@@ -1,0 +1,8 @@
+MAGIC 4000
+Version 3
+Instrument AWG610
+Ch1WaveformSequence "test_21_03_2022.wfm"
+Ch1Amplitude 2
+Ch1Offset 0
+Clock 800000000
+ClockReference Internal
