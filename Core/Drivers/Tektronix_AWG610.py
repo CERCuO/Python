@@ -519,8 +519,6 @@ class Tektronix_AWG610(Connection):
     def send_waveform(self, w, m1, m2, filename, clock):
         """
         Sends a complete waveform. All parameters need to be specified.
-        choose a file extension 'wfm' (must end with .pat)
-        See also: resend_waveform()
 
         Input:
             w (float[numpoints]) : waveform
