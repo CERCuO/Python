@@ -32,6 +32,8 @@ sys.path.append('C:\\depot\\CERC\\Python\\Core\\Drivers')
 
 from __connection__ import Connection
 from datetime import datetime
+import numpy as np
+import struct
 
 class Tektronix_AWG610(Connection):
     def __init__(self,addressString):
@@ -514,7 +516,50 @@ class Tektronix_AWG610(Connection):
         
         
         
-        
+    def send_waveform(self, w, m1, m2, filename, clock):
+        """
+        Sends a complete waveform. All parameters need to be specified.
+        choose a file extension 'wfm' (must end with .pat)
+        See also: resend_waveform()
+
+        Input:
+            w (float[numpoints]) : waveform
+            m1 (int[numpoints])  : marker1
+            m2 (int[numpoints])  : marker2
+            filename (str)    : filename
+            clock (int)          : frequency (Hz)
+
+        Output:
+            None
+        """
+
+        # Check for errors
+
+        if (not((len(w) == len(m1)) and ((len(m1) == len(m2))))):
+            return 'error'
+        self._values['files'][filename] = {}
+        self._values['files'][filename]['w'] = w
+        self._values['files'][filename]['m1'] = m1
+        self._values['files'][filename]['m2'] = m2
+        self._values['files'][filename]['clock'] = clock
+        self._values['files'][filename]['numpoints'] = len(w)
+
+        m = m1 + np.multiply(m2, 2)
+        ws = ''
+        for i in range(0, len(w)):
+            ws = ws + struct.pack('<fB', w[i], int(m[i]))
+        s1 = 'MMEM:DATA "%s",' % filename
+        s3 = 'MAGIC 1000\n'
+        s5 = ws
+        s6 = 'CLOCK %.10e\n' % clock
+
+        s4 = '#' + str(len(str(len(s5)))) + str(len(s5))
+        lenlen = str(len(str(len(s6) + len(s5) + len(s4) + len(s3))))
+        s2 = '#' + lenlen + str(len(s6) + len(s5) + len(s4) + len(s3))
+
+        mes = s1 + s2 + s3 + s4 + s5 + s6
+        self.visa_handle.write(mes)
+
         
         
         
