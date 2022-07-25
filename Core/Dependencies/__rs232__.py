@@ -50,7 +50,7 @@ class Rs232(BaseInstrument):
     def __init__(self,addressString):
         self._visaObj = initRS232(addressString)
         self.__setTimeout__(3000) # 3 seconds
-        self.connectionType = ConnectionTypes.RS232
+      #  self.connectionType = ConnectionTypes.RS232
         
     def __del__(self):
         """

@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Wed Jun  1 18:08:30 2022
+
+@author: Ottawa
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Mon Jan 17 13:52:53 2022
 
 @author: danhu
@@ -40,6 +47,8 @@ class Tektronix_AWG610(Connection):
         Connection.__init__(self,addressString)
         self.ManualURL = 'https://download.tek.com/manual/070A81050.pdf'
         self.Model = 'Tektronix AWG610'
+        self._values = {}
+        self._values['files'] = {}
         
     def GetInfo(self):
         try:
@@ -545,7 +554,11 @@ class Tektronix_AWG610(Connection):
         m = m1 + np.multiply(m2, 2)
         ws = ''
         for i in range(0, len(w)):
+
+            ws = ws + str(struct.pack('<fB', w[i], int(m[i])))
+
             ws = ws + struct.pack('<fB', w[i], int(m[i]))
+
         s1 = 'MMEM:DATA "%s",' % filename
         s3 = 'MAGIC 1000\n'
         s5 = ws
@@ -556,7 +569,8 @@ class Tektronix_AWG610(Connection):
         s2 = '#' + lenlen + str(len(s6) + len(s5) + len(s4) + len(s3))
 
         mes = s1 + s2 + s3 + s4 + s5 + s6
-        self.visa_handle.write(mes)
+
+        self.__write__(mes)
 
         
         
