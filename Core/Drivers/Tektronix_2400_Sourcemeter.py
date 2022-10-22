@@ -2,7 +2,8 @@
 """
 Created on Mon Aug  8 08:31:48 2022
 
-@author: danhu
+@author: Daniel Hutama
+dhuta087@uottawa.ca
 """
 
 # import sys
@@ -12,7 +13,6 @@ Created on Mon Aug  8 08:31:48 2022
 # driver for Tektronix 2450 Sourcemeter
 # developed by Daniel Hutama
 # dhuta087@uottawa.ca
-# Version 00.100 | 08 Aug 2022 | Initial structure setup
 
 # This devices uses IEEE 488.2
 # Standard Commands for Programmable Instruments (SCPI)
@@ -31,10 +31,10 @@ from __connection__ import Connection
 from datetime import datetime
 import numpy as np
 
-class Tektronix_2450(Connection):
+class Tektronix_2400(Connection):
     def __init__(self,addressString):
         Connection.__init__(self,addressString)
-        self.Manual = 'Tek_2450_Sourcemeter.pdf'
+        self.Manual = 'Tek_2400_Sourcemeter.pdf'
         
     def GetInfo(self):
         try:
