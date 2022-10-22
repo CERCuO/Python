@@ -49,3 +49,46 @@ class Tektronix_2400(Connection):
         res = self.__query__(cmd)
         return res
     
+    def SetSTR(self, cmd):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{}   |   <{}>'.format(now, cmd.upper()))      
+        res = self.__write__(cmd)
+        return res
+    
+    def GetActiveFunction(self):
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print('{}   |   <GET ACTIVE FUNCTION>'.format(now))      
+        res = self.__query__("CONF?")
+        l = res.split(',')
+        if len(l) == 2:
+            if eval(l[1]) == 'RES':
+                print('Active function is CURR, RES')
+                return 'RES'
+            else:
+                print("unknown result obtained. Check code if you see this line.")
+        elif len(l) == 1:
+            if 'CURR' in eval(l[0]):
+                print('Active function is CURR')
+                return 'CURR'
+            elif 'VOLT' in eval(l[0]):
+                print('Active function is VOLT')
+                return 'VOLT'
+
+        
+    def SetActiveFunction(self, cmd):
+        options = ['VOLT', 'CURR', 'RES']
+        if cmd not in options:
+            print('You must pass one of the following options: "VOLT", "CURR", "RES"' )
+        else:
+            now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            print('{}   |   <SET FUNCTION TO {}>'.format(now, cmd.upper()))      
+            res = self.__write__('CONF:{}'.format(cmd))
+            self.GetActiveFunction()
+            return res
+        
+        
+    def GetBufferData(self):
+        
+        
+        
+    
