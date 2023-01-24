@@ -56,9 +56,7 @@ class Tektronix_2400(Connection):
         return res
     
     def GetActiveFunction(self):
-        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print('{}   |   <GET ACTIVE FUNCTION>'.format(now))      
-        res = self.__query__("CONF?")
+        res = self.GetSTR("CONF?")
         l = res.split(',')
         if len(l) == 2:
             if eval(l[1]) == 'RES':
@@ -85,10 +83,41 @@ class Tektronix_2400(Connection):
             res = self.__write__('CONF:{}'.format(cmd))
             self.GetActiveFunction()
             return res
-        
-        
-    def GetBufferData(self):
-        
-        
-        
+
+    
+    def MeasureCurrent(self):
+        return self.GetSTR('MEAS:CURR?')
+    
+    def MeasureVoltage(self):
+        return self.GetSTR('MEAS:VOLT?')
+
+    def MeasureResistance(self):
+        return self.GetSTR('MEAS:RES?')        
+    
+    def MeasureMean(self):
+        return self.GetSTR('CALC3:FORM MEAN')
+    
+    def GetStatisticType(self):
+        return self.GetSTR('CALC3:FORM?')
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
