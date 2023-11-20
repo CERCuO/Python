@@ -31,6 +31,7 @@ from __connection__ import Connection
 from datetime import datetime
 import numpy as np
 import pyvisa
+import time
 
 class Tektronix_MDO3104():
     def __init__(self,addressString):
@@ -176,7 +177,7 @@ class Tektronix_MDO3104():
 
 
 # Data analysis
-run = 0
+run = 1
 if run == 1:
     import matplotlib.pyplot as plt
     scope = Tektronix_MDO3104('')
@@ -193,12 +194,36 @@ if run == 1:
     xlinspace = np.linspace(0, X_scale * num_pts, int(num_pts))
     xlinspace_ns = xlinspace*1e9
     
-    scaled_data_adj = scaled_data - np.mean(scaled_data)
-    
+    scaled_data_adj = scaled_data
+    # scaled_data_adj = scaled_data - np.mean(scaled_data)
     
     plt.xlabel('ns')
     plt.ylabel('V')
     plt.plot(xlinspace_ns[0:1999], scaled_data_adj[0:1999])
     plt.grid()
     plt.show()
+    
+    num_shots = 100
+    means = []
+    variances = []
+    for i in range(num_shots):
+        data = np.array(scope.GetData()).astype(float)
+        Y_scale = scope.GetData_ScaleY()
+        X_scale = scope.GetData_ScaleX()
+        num_pts = scope.GetData_NumPts()
+        scaled_data = data * Y_scale
+        means.append(np.mean(scaled_data))
+        if i%10==0:
+            print(i)
+        time.sleep(0.5)
+        
+    plt.plot(means)
+    plt.grid()
+    plt.show()
+    now = datetime.now().strftime("%Y_%m_%d_%Hh%Mm%Ss")
+    powerlevel = input('Enter CW laser power')
+    trialnum = input('Enter trial number for this power level')
+    np.savetxt('{}_{}mW_trial{}.txt'.format(now,powerlevel,trialnum), means)
+    
+
     
