@@ -215,7 +215,7 @@ if run == 1:
         means.append(np.mean(scaled_data))
         if i%10==0:
             print(i)
-        time.sleep(0.5)
+        time.sleep(0.2)
         
     plt.plot(means)
     plt.grid()
@@ -225,5 +225,5 @@ if run == 1:
     trialnum = input('Enter trial number for this power level')
     np.savetxt('{}_{}mW_trial{}.txt'.format(now,powerlevel,trialnum), means)
     
-
+#20-50 mV scale, 2 microsecond scale
     
